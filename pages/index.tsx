@@ -1,4 +1,4 @@
-import Article  from '../components/article';
+import Article from '../components/article';
 
 const mock = [{
   cover: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',

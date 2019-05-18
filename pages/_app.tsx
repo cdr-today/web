@@ -5,14 +5,12 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from '../reducers';
 import { Layout } from 'antd';
-import { OkApp, OkButton } from '../components';
+import { OkApp } from '../components';
 
 import 'antd/dist/antd.less';
 import '../styles/app.less';
 
 const store = createStore(rootReducer);
-const { Content } = Layout;
-
 const styles = {
   layout: {
     minHeight: '100vh'
@@ -20,7 +18,7 @@ const styles = {
   content: {
     padding: '2rem',
     background: '#fff',
-    height: '100%',
+    minHeight: '100%',
   }  
 }
 
@@ -29,11 +27,12 @@ class Amnesia extends App {
     const { Component, pageProps } = this.props
     return (
       <Provider store={store}>
-	<Layout style={styles.layout}>
-          <Content style={styles.content}>
-	    <OkApp.Drawer />
+ 	<OkApp.Drawer />
+	<OkApp.Helper />	
+	<Layout style={styles.layout} hasSider={true}>
+	  <Layout.Content style={styles.content}>
 	    <Component {...pageProps}/>
-          </Content>
+          </Layout.Content>
 	</Layout>
       </Provider>
     )
