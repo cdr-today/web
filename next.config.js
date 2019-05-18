@@ -11,4 +11,5 @@ module.exports = {
     }))
   ),
   target: 'serverless',
+  crossOrigin: 'anonymous'
 }

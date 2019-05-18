@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Icon, Popover, Divider, Modal } from 'antd';
-import '../../assets/styles/components/buttons.less';
 
 const styles = {
   button: {

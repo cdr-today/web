@@ -1,9 +1,22 @@
-import Markdown from '../components/markdown';
-import AffixTools from '../components/buttons/affix_tools';
-import { Affix, Button } from 'antd';
+import Article  from '../components/article';
+
+const mock = [{
+  cover: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+  title: 'Europe Street beat',
+  desc: 'www.instagram.com'
+}]
 
 export default () => (
   <div>
-    <AffixTools />
+  <Article.Item
+    cover={mock[0].cover}
+    title={mock[0].title}
+    desc={mock[0].desc}
+  />
+  <Article.Item
+    cover={mock[0].cover}
+    title={mock[0].title}
+    desc={mock[0].desc}
+  />
   </div>
-)
+);
