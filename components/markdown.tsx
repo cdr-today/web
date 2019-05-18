@@ -24,14 +24,28 @@ export default class DemoEditor extends Component {
     });
   };
 
+  setEditor = (editor) => {
+    this.editor = editor;
+  };
+  
+  focusEditor = () => {
+    if (this.editor) {
+      this.editor.focus();
+    }
+  };
+
   render() {
     return (
-      <Editor
-        editorKey="foobaz"
-        editorState={this.state.editorState}
-        onChange={this.onChange}
-        plugins={plugins}
-      />
+      <div style={{minHeight: '30vh'}} onClick={this.focusEditor}>
+	<Editor
+	  ref={this.setEditor}
+	  style={{height: '30vh'}}
+          editorKey="foobaz"
+          editorState={this.state.editorState}
+          onChange={this.onChange}
+          plugins={plugins}
+	/>
+      </div>
     );
   }
 }
