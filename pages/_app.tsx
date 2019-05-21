@@ -13,12 +13,11 @@ import '../styles/app.less';
 const store = createStore(rootReducer);
 const styles = {
   layout: {
-    minHeight: '100vh'
+    minHeight: '100%'
   },
   content: {
     padding: '2rem',
     background: '#fff',
-    minHeight: '100%',
   }  
 }
 
@@ -28,7 +27,7 @@ class Amnesia extends App {
     return (
       <Provider store={store}>
  	<OkApp.Drawer />
-	<OkApp.Helper />	
+	<OkApp.Helper />
 	<Layout style={styles.layout} hasSider={true}>
 	  <Layout.Content style={styles.content}>
 	    <Component {...pageProps}/>

@@ -12,7 +12,7 @@ export default (props) => {
   return (
     <Card
       style={ss.card}
-      cover={<img src={props.cover} />}
+      cover={<img className='' src={props.cover} />}
     >
       <Meta title={props.title} description={props.desc} />
     </Card>

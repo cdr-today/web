@@ -3,6 +3,26 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { Drawer, Button, Menu, Icon } from 'antd';
 
+const drawerItems = [{
+  name: '',
+  icon: 'smile'
+}, {
+  name: 'lark',
+  icon: 'twitter'
+}, {
+  name: 'message',
+  icon: 'message'
+}, {
+  name: 'edit',
+  icon: 'edit'
+}, {
+  name: 'user',
+  icon: 'user'
+}, {
+  name: 'setting',
+  icon: 'setting'
+}]
+
 const OkDrawer = props => (
   <Drawer
     width={80}
@@ -15,21 +35,11 @@ const OkDrawer = props => (
       className='menu' theme='light'
       defaultSelectedKeys={['smile']}
     >
-      <Menu.Item key="smile">
-	<Link href='/'><Icon type="smile" rotate={180}/></Link>
-      </Menu.Item>
-      <Menu.Item key="message">
-	<Link href='/message'><Icon type="message" /></Link>
-      </Menu.Item>
-      <Menu.Item key="edit">
-	<Link href='/edit'><Icon type="edit" /></Link>
-      </Menu.Item>
-      <Menu.Item key="user">
-	<Link href='/user'><Icon type="user" /></Link>
-      </Menu.Item>
-      <Menu.Item key="setting">
-	<Link href='/setting'><Icon type="setting" /></Link>
-      </Menu.Item>
+      {drawerItems.map(e => (
+	<Menu.Item key={e.name}>
+	  <Link href={`/${e.name}`}><Icon type={e.icon}/></Link>
+	</Menu.Item>	
+      ))}
     </Menu>
   </Drawer>
 );

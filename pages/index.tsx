@@ -1,22 +1,27 @@
 import Article from '../components/article';
 
 const mock = [{
-  cover: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+  cover: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
   title: 'Europe Street beat',
   desc: 'www.instagram.com'
-}]
+}];
+
+const ss = {
+  iframe: {
+    height: '80vh',
+    width: '100%'
+  }
+}
 
 export default () => (
   <div>
-  <Article.Item
-    cover={mock[0].cover}
-    title={mock[0].title}
-    desc={mock[0].desc}
-  />
-  <Article.Item
-    cover={mock[0].cover}
-    title={mock[0].title}
-    desc={mock[0].desc}
-  />
+    {mock.map(e => (
+      <Article.Item
+	key={e.title}
+	cover={e.cover}
+	title={e.title}
+	desc={e.desc}
+      />
+    ))}
   </div>
 );
