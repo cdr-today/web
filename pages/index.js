@@ -1,5 +1,5 @@
-
 import styles from './index.css';
+import s from 'store';
 
 export default function() {
   return (

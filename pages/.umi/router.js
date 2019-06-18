@@ -10,13 +10,22 @@ const Router = DefaultRouter;
 const routes = [
   {
     "path": "/",
-    "exact": true,
-    "component": require('../index.js').default
-  },
-  {
-    "path": "/login",
-    "exact": true,
-    "component": require('../login.js').default
+    "component": require('../../layouts/index.js').default,
+    "routes": [
+      {
+        "path": "/",
+        "exact": true,
+        "component": require('../index.js').default
+      },
+      {
+        "path": "/login",
+        "exact": true,
+        "component": require('../login.js').default
+      },
+      {
+        "component": () => React.createElement(require('/Users/mercury/.config/yarn/global/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: false })
+      }
+    ]
   },
   {
     "component": () => React.createElement(require('/Users/mercury/.config/yarn/global/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: false })

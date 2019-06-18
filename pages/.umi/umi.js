@@ -1,6 +1,6 @@
 import './polyfills';
 import '@tmp/history';
-
+import '../../global.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -34,7 +34,7 @@ Promise.all(moduleBeforeRendererPromises).then(() => {
   window.console && window.console.error(err);
 });
 
-
+require('../../global.css');
 
 // hot module replacement
 if (module.hot) {
