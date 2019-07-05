@@ -1,10 +1,9 @@
 import s from 'store';
 import r from 'umi/router';
-import c from '../../sdk';
+import sdk from '../../sdk';
+import React from 'react';
 
 ;(function() {
-  window.c = c;
-  
   const seed = s.get('seed');
   const author = s.get('author');
 
@@ -13,8 +12,12 @@ import c from '../../sdk';
   }
 })();
 
-export default (props) => (
-  <main>
-  { props.children }
-  </main>
-);
+export default class Index extends React.Component {
+  render() {
+      return (
+	<div>
+	  <main>{ this.props.children }</main>
+	</div>
+      );
+  }
+}
