@@ -48,9 +48,10 @@ export default class Index extends React.Component {
 
 	s.set('article_title', '');
 	s.set('article_content', '');
+      } else if(r && r.match(/WARNING_010/)) {
+	alert('用户名重复，请重新设置用户名~');
+	router.push('/login');
       }
-    }).catch(err => {
-      console.error(err);
     })
   }
   
