@@ -1,17 +1,13 @@
 .page {
-    margin: 2rem 3rem;
-    margin-bottom: 0rem;
+    padding: 2rem;
 }
 
 .header {
     width: 100%;
-    position: fixed;
-    z-index: 3;
 }
 
 .container {
     position: relative;
-    top: 6rem;
     max-width: 750px;
     margin: 2rem auto;
 }

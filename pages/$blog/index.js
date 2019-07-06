@@ -1,5 +1,5 @@
 import React from 'react';
-import sdk from '../../../sdk';
+import sdk from '@/sdk';
 import ss from '@/styles/blog.css';
 import router from 'umi/router';
 

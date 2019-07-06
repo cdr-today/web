@@ -1,5 +1,5 @@
 import s from 'store';
-import sdk from '../../sdk';
+import sdk from '@/sdk';
 import React from 'react';
 import { Button } from 'antd';
 import styles from '@/styles/index.css';
@@ -65,17 +65,18 @@ export default class Index extends React.Component {
 	    placeholder="输入文章标题..."
 	    onChange={e => this.onChange(e, 'title')}
 	  />
-	  <div className={styles.tools}>
-	    <div onClick={() => router.push(s.get('author'))} className={styles.item}>文章列表</div>
-	    <div className={styles.item}>{s.get('author')}</div>
+	  <div
+	    onClick={() => router.push(s.get('author'))}
+	    className={styles.item}>
+	    {s.get('author')}
 	  </div>
 	</nav>
 	<div className={styles.normal}>
 	  <textarea
-	  value={this.state.content}
-	  className={styles.content}
-	  placeholder='输入文章内容...'
-	  onChange={e => this.onChange(e, 'content')}
+	    value={this.state.content}
+	    className={styles.content}
+	    placeholder='输入文章内容...'
+	    onChange={e => this.onChange(e, 'content')}
 	  />
 	  <Button
 	    className={styles.post}

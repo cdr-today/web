@@ -1,6 +1,5 @@
 import s from 'store';
 import r from 'umi/router';
-import sdk from '../../sdk';
 import React from 'react';
 
 ;(function() {
