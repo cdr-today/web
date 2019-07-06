@@ -1,0 +1,31 @@
+.page {
+    margin: 2rem 3rem;
+    margin-bottom: 0rem;
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    z-index: 3;
+}
+
+.container {
+    position: relative;
+    top: 6rem;
+    max-width: 750px;
+    margin: 2rem auto;
+}
+
+.article {
+    padding: 1rem;
+    background-color: rgba(99, 99, 99, .1);
+    margin: 3rem 0;
+}
+
+.article:hover {
+    cursor: pointer;
+}
+
+.article_time {
+    text-align: right;
+}

@@ -3,6 +3,7 @@ import sdk from '../../sdk';
 import React from 'react';
 import { Button } from 'antd';
 import styles from '@/styles/index.css';
+import router from 'umi/router';
 
 export default class Index extends React.Component {
   state = {
@@ -25,10 +26,10 @@ export default class Index extends React.Component {
   }
   
   publish() {
-    if (title == '') {
+    if (this.state.title == '') {
       alert('请输入文章标题...');
       return;
-    } else if(content == '') {
+    } else if(this.state.content == '') {
       alert('请输入文章内容...');
       return;
     }
@@ -64,7 +65,7 @@ export default class Index extends React.Component {
 	    onChange={e => this.onChange(e, 'title')}
 	  />
 	  <div className={styles.tools}>
-	    <div className={styles.item}>文章列表</div>
+	    <div onClick={() => router.push(s.get('author'))} className={styles.item}>文章列表</div>
 	    <div className={styles.item}>{s.get('author')}</div>
 	  </div>
 	</nav>
@@ -78,7 +79,7 @@ export default class Index extends React.Component {
 	  <Button
 	    className={styles.post}
 	    type="normal" size='large'
-	    onClick={this.publish}
+	    onClick={this.publish.bind(this)}
 	  >发布</Button>
 	</div>
       </main>

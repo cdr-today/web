@@ -22,6 +22,7 @@
 
 /* nav */
 .header {
+    position: fixed;
     display: flex;
     border-bottom: 2px solid #eaeaea;
     width: 100%;

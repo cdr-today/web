@@ -23,14 +23,14 @@ const routes = [
         "component": require('../login.js').default
       },
       {
-        "path": "/:author",
+        "path": "/:blog",
         "exact": true,
-        "component": require('../$author/index.js').default
+        "component": require('../$blog/index.js').default
       },
       {
-        "path": "/:author/:article",
+        "path": "/:blog/:article",
         "exact": true,
-        "component": require('../$author/$article.js').default
+        "component": require('../$blog/$article.js').default
       },
       {
         "component": () => React.createElement(require('/Users/mercury/.config/yarn/global/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: false })
