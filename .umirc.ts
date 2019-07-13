@@ -22,7 +22,11 @@ const config: IConfig =  {
         ],
       },
     }],
-  ]
+  ],
+  theme: {
+    "primary-color": "#333333",
+    "tabs-horizontal-padding": "12px 8px",
+  }
 }
 
 export default config;
