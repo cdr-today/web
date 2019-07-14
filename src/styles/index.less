@@ -3,7 +3,7 @@
     margin: auto auto;
 }
 
-.top_col {
+.top_row {
     padding-bottom: 20px;
 }
 
@@ -11,12 +11,17 @@
     color: black;
     margin: auto 0;
     font-size: 2rem;
+    line-height: 2rem;
     font-weight: 600;
 }
 
 .tools {
     text-align: right;
     margin: auto 0;
+
+    @media (max-width: 475px) {
+	display: none;
+    }
 }
 
 .pull_article {
@@ -28,6 +33,6 @@
     border-color: rgba(3, 168, 124, 1);
 }
 
-.draft {
-    padding-left: 7px;
+.tp {
+    padding: 20px 7px;
 }

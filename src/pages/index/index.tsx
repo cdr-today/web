@@ -11,8 +11,8 @@ function callback(key) {
 export default function() {
   return (
     <section className={ss.page}>
-      <Row type='flex'>
-	<Col className={ss.top_col} span={12}>
+      <Row className={ss.top_row} type='flex'>
+	<Col span={12}>
 	  <p className={ss.title}>我的文章</p>
 	</Col>
 	<Col className={ss.tools} span={12}>
@@ -27,15 +27,16 @@ export default function() {
 	  tabBarGutter={0}
 	  animated={false}
 	>
-	  <TabPane className={ss.draft} tab="草稿" key="1">
-	    草稿
+	  <TabPane className={ss.tp} tab="草稿" key="1">
+	    无草稿...
+	    <Divider />
 	  </TabPane>
-	  <TabPane tab="已发布" key="2">
-	    已发布
+	  <TabPane className={ss.tp} tab="已发布" key="2">
+	    未发布文章...
+	    <Divider />
 	  </TabPane>
 	</Tabs>
       </Row>
-      <Divider />
     </section>
   );
 }
