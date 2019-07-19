@@ -1,3 +1,4 @@
+
 import { IConfig } from 'umi-types';
 
 // ref: https://umijs.org/config/
@@ -11,7 +12,7 @@ const config: IConfig =  {
 	immer: true
       },
       dynamicImport: { webpackChunkName: true },
-      title: 'web',
+      title: 'Lark-in',
       dll: false,      
       routes: {
         exclude: [

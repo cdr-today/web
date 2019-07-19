@@ -3,20 +3,27 @@ import { connect } from 'dva';
 import ss from './index.less';
 import { Row, Col, Menu, Layout, Typography } from 'antd';
 import Login from '@/components/login';
+import Register from '@/components/register';
 
 const { SubMenu } = Menu;
 const { Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
 const BasicLayout = props => {
-  const { dispatch, user } = props;
+  const { dispatch, modal } = props;
 
-  function h() {
-    alert('hello');
+  function login() {
+    dispatch({
+      type: 'modal/login',
+      payload: true
+    })
   }
 
-  function t() {
-    alert('Trish!');
+  function register() {
+    dispatch({
+      type: 'modal/register',
+      payload: true
+    })
   }
   
   return (
@@ -27,12 +34,13 @@ const BasicLayout = props => {
 	    <p>Lark-in</p>
 	  </Col>
 	  <Col className={ss.header_right} span={12}>
-	    <a onClick={h}>登录</a>
-	    <a onClick={t}>注册</a>
+	    <a onClick={login}>登录</a>
+	    <a onClick={register}>注册</a>
 	  </Col>
 	</Row>
 	<section>
 	  <Login />
+	  <Register />
 	</section>
       </Header>
       <Content className={ss.content}>{props.children}</Content>
@@ -40,6 +48,6 @@ const BasicLayout = props => {
   );
 };
 
-export default connect(({ user }) => ({
-  user
+export default connect(({ modal }) => ({
+  modal
 }))(BasicLayout);
