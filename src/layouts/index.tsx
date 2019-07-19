@@ -10,6 +10,15 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const BasicLayout = props => {
   const { dispatch, user } = props;
+
+  function h() {
+    alert('hello');
+  }
+
+  function t() {
+    alert('Trish!');
+  }
+  
   return (
     <Layout className={ss.normal}>
       <Header className={ss.header}>
@@ -18,7 +27,8 @@ const BasicLayout = props => {
 	    <p>Lark-in</p>
 	  </Col>
 	  <Col className={ss.header_right} span={12}>
-	    <p level={4}>hello</p>
+	    <a onClick={h}>登录</a>
+	    <a onClick={t}>注册</a>
 	  </Col>
 	</Row>
 	<section>
