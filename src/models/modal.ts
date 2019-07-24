@@ -2,7 +2,8 @@ export default {
   state: {
     login: false,
     register: false,
-    menu: false,
+    profile: false,
+    profile_menu: false
   },
   reducers: {
     'login'(state, { payload: bool }) {
@@ -11,6 +12,10 @@ export default {
     },
     'register'(state, { payload: bool }) {
       state.register = bool;
+      return state;
+    },
+    'profile'(state, { payload: bool }) {
+      state.profile = bool;
       return state;
     }
   }

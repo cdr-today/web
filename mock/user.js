@@ -1,5 +1,5 @@
 const userData = {
-  user: 'clearloop',
+  user: 'Anonymous',
   token: '73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049'
 }
 

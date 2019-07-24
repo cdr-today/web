@@ -8,16 +8,8 @@ import userAPI from '@/api/user';
 const Login = props => {
 
   const { dispatch, modal, login } = props;
-
-  const onChange = e => dispatch({
-    type: `login/${e.target.id}`,
-    payload: e.target.value
-  });
-
-  const hideModal = () => dispatch({
-    type: 'modal/login',
-    payload: false
-  });
+  const onChange = async e => dispatch({ type: `login/${e.target.id}`, payload: e.target.value });
+  const hideModal = async () => dispatch({ type: 'modal/login', payload: false });
 
   function onOk() {
     let keys = Object.keys(login);
@@ -28,16 +20,16 @@ const Login = props => {
       }
     }
 
-    userAPI.login(login).then(r => {
+    userAPI.login(login).then(async r => {
       if (r.data.errMsg === 'ok') {
 	message.success('登录成功');
-	dispatch({
-	  type: 'login/clear',
-	  payload: null
-	});
-	hideModal();
+	await hideModal();
+	await dispatch({ type: 'stat/login', payload: true });
+	await dispatch({ type: 'login/clear', payload: null });
+      } else {
+	message.error('登录失败');
       }
-    })
+    });
   }
 
   return (
