@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const login = params => axios.post('/user/login');
-const register = params => axios.post('/user/register');
+const login = params => axios.post('/api/user/login', params);
+const register = params => axios.post('/api/puser/register', params);
 
 export default {
   login,

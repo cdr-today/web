@@ -34,9 +34,11 @@ const Register = props => {
 	    type: 'register/clear',
 	    payload: null
 	  });
+	  hideModal();
+	} else {
+	  message.error('网络错误')
 	}
       })
-      hideModal();
     } else {
       message.error('前后密码不一致')
     }

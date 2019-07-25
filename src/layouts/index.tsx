@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
-import ss from './index.less';
+import ss from '@/styles/layout.less';
 import { Row, Col, Menu, Layout, Popover, Divider } from 'antd';
+import router from 'umi/router';
 import Login from '@/components/login';
 import Register from '@/components/register';
 
@@ -12,6 +13,7 @@ const BasicLayout = props => {
 
   const login = () => dispatch({ type: 'modal/login', payload: true });
   const register = () => dispatch({ type: 'modal/register', payload: true });
+  const home = () => router.push('/');
   const profile = () => console.log('hello');
 
   const List = (
@@ -27,7 +29,7 @@ const BasicLayout = props => {
   const Profile = () => (
     <Popover content={List} title={stat.user.username} trigger="click">
       <a onClick={profile}>{stat.user.username}</a>
-    </Popover>    
+    </Popover>
   );
   
   const Tools = () => (
@@ -42,7 +44,7 @@ const BasicLayout = props => {
       <Header className={ss.header}>
 	<Row className={ss.header_row}>
 	  <Col className={ss.header_title} span={12}>
-	    <p>Lark-in</p>
+	    <div className={ss.header_title_text} onClick={home}>Lark-in</div>
 	  </Col>
 	  <Col className={ss.header_right} span={12}>
 	    {stat.login? <Profile />: <Tools />}
