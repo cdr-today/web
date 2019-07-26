@@ -1,13 +1,25 @@
+import store from 'store';
+import router from 'umi/router';
+
 export default {
   state: {
     login: false,
     user: {
-      username: 'Anonymous'
+      username: 'Anonymous',
+      token: '',
     }
   },
   reducers: {
     'login'(state, { payload: bool }) {
       state.login = bool;
+
+      // set user data;
+      let user = store.get('store_data');
+      state.user.token !== user.token? state.user = user: ''
+
+      // logout;
+      bool === false? store.clearAll(): ''
+      
       return state;
     },
     'user'(state, { payload: obj }) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
+import { sha3_256 } from 'js-sha3';
 import { message, Button, Input, Modal } from 'antd';
 
 import ss from '@/styles/login.less';
@@ -7,7 +8,6 @@ import userAPI from '@/api/user';
 
 const Register = props => {
   const { dispatch, modal, register } = props;
-
   const onChange = e =>  dispatch({
     type: `register/${e.target.id}`,
     payload: e.target.value
@@ -27,7 +27,10 @@ const Register = props => {
       }
     }
     if (register.password === register.password_r) {
-      userAPI.register(register).then(r => {
+      let _register = JSON.parse(JSON.stringify(register));
+      _register.password = sha3_256(register.password);
+      
+      userAPI.register(_register).then(r => {
 	if (r.data.errMsg === 'ok') {
 	  message.success('注册成功')
 	  dispatch({
@@ -36,7 +39,7 @@ const Register = props => {
 	  });
 	  hideModal();
 	} else {
-	  message.error('网络错误')
+	  message.error('用户名已注册')
 	}
       })
     } else {

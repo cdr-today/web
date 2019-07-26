@@ -1,5 +1,6 @@
 import React from 'react';
 import router from 'umi/router';
+import { connect } from 'dva';
 import { Row, Col, Button, Tabs, Divider, Empty } from 'antd';
 
 import ss from '@/styles/index.less';
@@ -10,10 +11,11 @@ function callback(key) {
   console.log(key);
 }
 
-export default function() {
-  
+const Index = props => {
+  const { dispatch, stat } = props;
+
   function u() {
-    alert('unimplemented...')
+    alert('unimplemented...');
   }
   
   function editor() {
@@ -27,8 +29,7 @@ export default function() {
 	  <p className={ss.title}>我的文章</p>
 	</Col>
 	<Col className={ss.tools} span={12}>
-	  {/* <Button className={ss.pull_article} size='large' onClick={u}>引入文章</Button> */}
-	  <Button className={ss.push_article} size='large' onClick={editor}>写文章</Button>
+	  {stat.login === false?'':<Button className={ss.push_article} size='large' onClick={editor}>写文章</Button>}
 	</Col>
       </Row>
       <Row>
@@ -46,3 +47,7 @@ export default function() {
     </section>
   );
 }
+
+export default connect(({ modal, login, stat }) => ({
+  modal, login, stat
+}))(Index);
