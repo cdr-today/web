@@ -1,5 +1,3 @@
-import { message } from 'antd';
-
 export default {
   state: {
     username: '',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import ss from '@/styles/layout.less';
-import { message, Row, Col, Menu, Layout, Popover, Divider } from 'antd';
+import { message, Row, Col, Menu, Layout, Popover, Divider, Icon } from 'antd';
 
 import store from 'store';
 import router from 'umi/router';
@@ -11,7 +11,7 @@ import Register from '@/components/register';
 const { Header, Footer, Sider, Content } = Layout;
 
 const BasicLayout = props => {
-  const { dispatch, modal, stat } = props;
+  const { dispatch, modal, stat, editor } = props;
   const path = props.location.pathname;
 
   // auth
@@ -34,32 +34,44 @@ const BasicLayout = props => {
 
   // publish
   const publish = async () => {
-    console.log('publish');
+    // console.log('publish');
   }
 
   // router
   const home = () => router.push('/');
-  const editor = () => router.push('/editor');
+  const toEditor = () => router.push('/editor');
 
-  const List = (
-    <div>
-      <a onClick={editor}>写文章</a>
+  const userMenu = (
+    <div className={ss.um}>
+      <a onClick={toEditor}>写文章</a>
       <br />
       <a onClick={home}>文章列表</a>
       <hr />
       <a onClick={logout}>退出登录</a>
     </div>
   );
+
+  const publishMenu = (
+    <div className={ss.pm}>
+      <a>存为草稿</a>
+      <br />
+      <a>发布文章</a>
+    </div>
+  );
   
   const Profile = () => (
-    <Popover content={List} trigger="click">
-      <a>{stat.user.username}</a>
-    </Popover>
+    <div>
+      <Popover content={publishMenu} trigger="click">
+	{path === '/editor'? <a onClick={publish}><Icon type="smile" /></a>: ''}
+      </Popover>
+      <Popover content={userMenu} trigger="click">
+	<a>{stat.user.username}</a>
+      </Popover>
+    </div>
   );
   
   const Tools = () => (
     <div>
-      {path === '/editor'? <a onClick={publish}>发布</a>:''}
       <a onClick={login}>登录</a>
       <a onClick={register}>注册</a>
     </div>
@@ -86,6 +98,6 @@ const BasicLayout = props => {
   );
 };
 
-export default connect(({ modal, stat }) => ({
-  modal, stat
+export default connect(({ modal, stat, editor }) => ({
+  modal, stat, editor
 }))(BasicLayout);
