@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
 import ss from '@/styles/editor.less';
+import { Typography, Divider } from 'antd';
+
+const { Title } = Typography;
 
 const Editor = props => {
   const { editor, dispatch } = props;
@@ -10,7 +13,8 @@ const Editor = props => {
   
   return (
     <main className={ss.editor}>
-      <input className={ss.title} onChange={tc} value={editor.title}/>
+      <Title level={2}><input className={ss.title} onChange={tc} value={editor.title}/></Title>
+      <Divider />
       <textarea className={ss.content} onChange={cc} value={editor.content}/>
     </main>
   );

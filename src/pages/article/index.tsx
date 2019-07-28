@@ -4,6 +4,8 @@ import { Typography, Divider } from 'antd';
 import router from 'umi/router';
 const { Title } = Typography;
 
+import ss from '@/styles/article.less';
+
 export default class Article extends React.Component {
 
   state = {
@@ -32,7 +34,7 @@ export default class Article extends React.Component {
   
   render() {
     return(
-      <div>
+      <div className={ss.page}>
 	<Title level={2}>{this.state.title}</Title>
 	<Divider />
 	<content>{this.state.content}</content>
