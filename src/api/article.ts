@@ -5,8 +5,8 @@ class Article {
     return axios.post('/api/article/draft', params);
   }
 
-  static get_draft(params) {
-    return axios.get(`/api/article/draft?id=${params.id}`);
+  static get_draft(query) {
+    return axios.get(`/api/article/draft?id=${query.id}`);
   }
 
   static get_draft_thums(params) {
@@ -17,8 +17,8 @@ class Article {
     return axios.post('/api/article', params);
   }
 
-  static get_article(params) {
-    return axios.get(`/api/article?id=${params.id}`);
+  static get_article(query) {
+    return axios.get(`/api/article?id=${query.id}`);
   }
 
   static get_article_thums(params) {

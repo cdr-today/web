@@ -7,8 +7,7 @@ import ss from '@/styles/article_thum.less';
 
 const { Title } = Typography;
 const article = node => {
-  console.log(node)
-  // router.push(`/article?id=${node.target.id}&type=${node.target._type}`);
+  router.push(`/article?id=${node.id}&type=${node.type}`);
 }
 
 const ArticleThum = props => (

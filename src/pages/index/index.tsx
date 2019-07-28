@@ -9,21 +9,26 @@ import ss from '@/styles/index.less';
 
 const { TabPane } = Tabs;
 
-class Drafts extends React.Component {
+class Articles extends React.Component {
   state = {
-    drafts: []
+    articles: []
   }
 
+  constructor(props) {
+    super(props);
+    this.props = props;
+  }
+  
   componentWillMount() {
-    articleAPI.get_draft_thums().then(r => {
+    articleAPI[`get_${this.props.type}_thums`]().then(r => {
       if (r.data.errMsg === 'ok') {
-	this.setState({ drafts: r.data.data });
+	this.setState({ articles: r.data.data });
       }
     })
   }
 
   render() {
-    if (this.state.drafts.length === 0) {
+    if (this.state.articles.length === 0) {
       return (
 	<div>
 	  <div className={ss.empty}>暂无草稿</div>
@@ -33,8 +38,8 @@ class Drafts extends React.Component {
     } else {
       return (
 	<div>
-	  {this.state.drafts.map(r => (
-	    <ArticleThum key={r._id} title={r.title} id={r._id} type='draft' />)
+	  {this.state.articles.map(r => (
+	    <ArticleThum key={r._id} title={r.title} id={r._id} type={this.props.type} />)
 	  )}
 	</div>
       )
@@ -67,7 +72,7 @@ const Index = props => {
 	<Tabs defaultActiveKey="1" onChange={callback} tabBarGutter={0} animated={false}>
 	  <TabPane className={ss.tp} tab="草稿" key="1">
 	    {stat.login?
-	      <Drafts />:
+	      <Articles type='draft' />:
 	      (<div>
 		<div className={ss.empty}>暂无草稿</div>
 		<Divider />
@@ -75,8 +80,13 @@ const Index = props => {
 	    }
 	  </TabPane>
 	  <TabPane className={ss.tp} tab="已发布" key="2">
-	    <div className={ss.empty}>暂无发布</div>
-	    <Divider />
+	    {stat.login?
+	      <Articles type='article' />:
+	      (<div>
+		<div className={ss.empty}>暂无草稿</div>
+		<Divider />
+	      </div>)
+	    }
 	  </TabPane>
 	</Tabs>
       </Row>
