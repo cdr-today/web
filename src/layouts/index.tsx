@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import ss from '@/styles/layout.less';
-import { message, Row, Col, Menu, Layout, Popover, Divider, Icon } from 'antd';
+import { message, Row, Col, Menu, Layout, Popover, Divider, Icon, Modal } from 'antd';
 
 import store from 'store';
 import router from 'umi/router';
@@ -15,7 +15,8 @@ const { Header, Footer, Sider, Content } = Layout;
 const BasicLayout = props => {
   const { dispatch, modal, stat, editor } = props;
   const path = props.location.pathname;
-
+  const query = props.history.location.query;
+    
   // auth
   stat.login === false && path !== '/'? router.push('/'): '';
 
@@ -44,14 +45,38 @@ const BasicLayout = props => {
       return;
     }
 
-    let r = await article.draft(editor);
-    if (r.data.errMsg && r.data.errMsg === 'ok') {
-      await message.success('已保存为草稿', .5);
-      router.push('/');
-      await dispatch({ type: 'editor/clear', payload: null });
-    } else {
-      await message.error('保存草稿失败，请重新登录', .5);
-      await logout();
+    if (query.id) {
+      Modal.confirm({
+	icon: null,
+	title: query.type === 'draft'?'更新草稿?':'保存为草稿?',
+	okText: '确认',
+	cancelText: '取消',
+	onOk: async () => {
+	  let r = await article.update_draft({
+	    id: query.id,
+	    ...editor
+	  });
+	  message.success(query.type === 'draft'?'更新成功':'保存成功');
+	  router.push('/');
+	}
+      })
+    } else {      
+      Modal.confirm({
+	icon: null,
+	title: '保存为草稿?',
+	okText: '确认',
+	cancelText: '取消',
+	onOk: async () => {
+	  let r = await article.draft(editor);
+	  if (r.data.errMsg && r.data.errMsg === 'ok') {
+	    await message.success('已保存为草稿', .5);
+	    router.push('/');
+	    await dispatch({ type: 'editor/clear', payload: null });
+	  } else {
+	    await message.error('保存草稿失败，请重新登录', .5);
+	  }	
+	}
+      });
     }
   }
   
@@ -65,14 +90,33 @@ const BasicLayout = props => {
       return;
     }
 
-    let r = await article.article(editor);
-    
-    if (r.data.errMsg && r.data.errMsg === 'ok') {
-      await message.success('文章已发布', .5);
-      router.push('/');
-      await dispatch({ type: 'editor/clear', payload: null });
+    if (query.type && query.type === 'article') {
+      Modal.confirm({
+	icon: null,
+	title: query.type === 'draft'?'发布为新文章?':'更新文章?',
+	okText: '确认',
+	cancelText: '取消'
+      })
     } else {
-      await message.error('文章发布失败', .5);
+      Modal.confirm({
+	icon: null,
+	title: '发布文章?',
+	okText: '确认',
+	cancelText: '取消',
+	onOk: async () => {
+	  let r = await article.article({
+	    id: query.id,
+	    ...editor
+	  });
+	  if (r.data.errMsg && r.data.errMsg === 'ok') {
+	    await message.success('文章已发布', .5);
+	    router.push('/');
+	    await dispatch({ type: 'editor/clear', payload: null });
+	  } else {
+	    await message.error('文章发布失败', .5);
+	  }
+	}
+      })
     }
   }
 

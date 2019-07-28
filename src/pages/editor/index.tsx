@@ -2,22 +2,50 @@ import React from 'react';
 import { connect } from 'dva';
 import ss from '@/styles/editor.less';
 import { Typography, Divider } from 'antd';
+import router from 'umi/router';
+
+import api from '@/api/article';
 
 const { Title } = Typography;
 
-const Editor = props => {
-  const { editor, dispatch } = props;
+class Editor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props = props;
+  }
 
-  const tc = e => dispatch({ type: 'editor/title', payload: e.target.value });
-  const cc = e => dispatch({ type: 'editor/content', payload: e.target.value });
+  componentWillMount() {
+    let query = this.props.history.location.query;
+    if (query.type) {
+      api[`get_${query.type}`](query).then(r => {
+	if (r.data.errMsg === 'ok' && r.data.data.length === 1) {
+	  this.props.dispatch({ type: 'editor/title', payload: r.data.data[0].title });
+	  this.props.dispatch({ type: 'editor/content', payload: r.data.data[0].content });
+	} else {
+	  router.push('/');
+	}
+      })
+    }
+  }
   
-  return (
-    <main className={ss.editor}>
-      <Title level={2}><input className={ss.title} onChange={tc} value={editor.title}/></Title>
-      <Divider />
-      <textarea className={ss.content} onChange={cc} value={editor.content}/>
-    </main>
-  );
+  tc = async (e) => {
+    await this.props.dispatch({ type: 'editor/title', payload: e.target.value });
+  }
+
+  cc = async (e) => {
+    await this.props.dispatch({ type: 'editor/content', payload: e.target.value });
+  }
+
+  render() {
+    const { editor } = this.props;
+    return (
+      <main className={ss.editor}>
+	<Title level={2}><input className={ss.title} onChange={this.tc} value={editor.title}/></Title>
+	<Divider />
+	<textarea className={ss.content} onChange={this.cc} value={editor.content}/>
+      </main>
+    );
+  }
 }
 
 export default connect(({ editor }) => ({

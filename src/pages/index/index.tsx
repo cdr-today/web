@@ -4,7 +4,6 @@ import { connect } from 'dva';
 import articleAPI from '@/api/article';
 import { Row, Col, Button, Tabs, Divider, Empty } from 'antd';
 import ArticleThum from '@/components/article_thum';
-
 import ss from '@/styles/index.less';
 
 const { TabPane } = Tabs;
@@ -18,13 +17,17 @@ class Articles extends React.Component {
     super(props);
     this.props = props;
   }
-  
-  componentWillMount() {
+
+  gen() {
     articleAPI[`get_${this.props.type}_thums`]().then(r => {
       if (r.data.errMsg === 'ok') {
 	this.setState({ articles: r.data.data });
       }
     })
+  }
+
+  componentWillMount() {
+    this.gen()
   }
 
   render() {
@@ -39,7 +42,7 @@ class Articles extends React.Component {
       return (
 	<div>
 	  {this.state.articles.map(r => (
-	    <ArticleThum key={r._id} title={r.title} id={r._id} type={this.props.type} />)
+	    <ArticleThum key={r._id} title={r.title} id={r._id} type={this.props.type} that={this}/>)
 	  )}
 	</div>
       )
