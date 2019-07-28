@@ -1,24 +1,55 @@
 import React from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
+import articleAPI from '@/api/article';
 import { Row, Col, Button, Tabs, Divider, Empty } from 'antd';
+import ArticleThum from '@/components/article_thum';
 
 import ss from '@/styles/index.less';
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
+class Drafts extends React.Component {
+  state = {
+    drafts: []
+  }
+
+  componentWillMount() {
+    articleAPI.get_draft_thums().then(r => {
+      if (r.data.errMsg === 'ok') {
+	this.setState({ drafts: r.data.data });
+      }
+    })
+  }
+
+  render() {
+    if (this.state.drafts.length === 0) {
+      return (
+	<div>
+	  <div className={ss.empty}>暂无草稿</div>
+	  <Divider />
+	</div>
+      )
+    } else {
+      return (
+	<div>
+	  {this.state.drafts.map(r => (
+	    <ArticleThum key={r._id} title={r.title} id={r._id} type='draft' />)
+	  )}
+	</div>
+      )
+    }
+  }
+};
 
 const Index = props => {
   const { dispatch, stat } = props;
 
-  function u() {
-    alert('unimplemented...');
+  const callback = (key) => {
+    console.log(key);
   }
-  
-  function editor() {
+
+  const editor = () => {
     router.push('/editor');
   }
   
@@ -35,8 +66,13 @@ const Index = props => {
       <Row>
 	<Tabs defaultActiveKey="1" onChange={callback} tabBarGutter={0} animated={false}>
 	  <TabPane className={ss.tp} tab="草稿" key="1">
-	    <div className={ss.empty}>暂无草稿</div>
-	    <Divider />
+	    {stat.login?
+	      <Drafts />:
+	      (<div>
+		<div className={ss.empty}>暂无草稿</div>
+		<Divider />
+	      </div>)
+	    }
 	  </TabPane>
 	  <TabPane className={ss.tp} tab="已发布" key="2">
 	    <div className={ss.empty}>暂无发布</div>

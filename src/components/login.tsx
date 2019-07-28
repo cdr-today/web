@@ -1,5 +1,6 @@
 import React from 'react';
 import store from 'store';
+import axios from 'axios';
 import { connect } from 'dva';
 import { sha3_256 } from 'js-sha3';
 import { message, Modal, Button, Input } from 'antd';
@@ -26,8 +27,9 @@ const Login = props => {
     
     userAPI.login(_login).then(async r => {
       if (r.data.errMsg === 'ok') {
+	axios.defaults.headers.token = r.headers.token;
 	let store_data = {
-	  token: r.headers.auth,
+	  token: r.headers.token,
 	  username: r.data.username
 	};
 	store.set('store_data', store_data);

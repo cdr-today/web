@@ -33,10 +33,7 @@ const Register = props => {
       userAPI.register(_register).then(r => {
 	if (r.data.errMsg === 'ok') {
 	  message.success('注册成功')
-	  dispatch({
-	    type: 'register/clear',
-	    payload: null
-	  });
+	  dispatch({ type: 'register/clear', payload: null });
 	  hideModal();
 	} else {
 	  message.error('用户名已注册')

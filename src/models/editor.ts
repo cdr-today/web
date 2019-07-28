@@ -11,6 +11,11 @@ export default {
     'content'(state, { payload: str }) {
       state.content = str;
       return state;
+    },
+    'clear'(state, { payload: str }) {
+      state.title = '';
+      state.content = '';
+      return state;
     }
   }
 }

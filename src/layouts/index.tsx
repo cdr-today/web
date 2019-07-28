@@ -8,6 +8,8 @@ import router from 'umi/router';
 import Login from '@/components/login';
 import Register from '@/components/register';
 
+import article from '@/api/article';
+
 const { Header, Footer, Sider, Content } = Layout;
 
 const BasicLayout = props => {
@@ -32,9 +34,46 @@ const BasicLayout = props => {
     await store.clearAll();
   }
 
+  // draft
+  const draft = async () => {
+    if (editor.title === '') {
+      message.warning('请填写标题');
+      return;
+    } else if (editor.content === '') {
+      message.warning('请填写文章内容');
+      return;
+    }
+
+    let r = await article.draft(editor);
+    if (r.data.errMsg && r.data.errMsg === 'ok') {
+      await message.success('已保存为草稿', .5);
+      router.push('/');
+      await dispatch({ type: 'editor/clear', payload: null });
+    } else {
+      await message.error('保存草稿失败，请重新登录', .5);
+      await logout();
+    }
+  }
+  
   // publish
   const publish = async () => {
-    // console.log('publish');
+    if (editor.title === '') {
+      message.warning('请填写标题');
+      return;
+    } else if (editor.content === '') {
+      message.warning('请填写文章内容');
+      return;
+    }
+
+    let r = await article.article(editor);
+    
+    if (r.data.errMsg && r.data.errMsg === 'ok') {
+      await message.success('文章已发布', .5);
+      router.push('/');
+      await dispatch({ type: 'editor/clear', payload: null });
+    } else {
+      await message.error('文章发布失败', .5);
+    }
   }
 
   // router
@@ -53,16 +92,16 @@ const BasicLayout = props => {
 
   const publishMenu = (
     <div className={ss.pm}>
-      <a>存为草稿</a>
+      <a onClick={draft}>存为草稿</a>
       <br />
-      <a>发布文章</a>
+      <a onClick={publish}>发布文章</a>
     </div>
   );
   
   const Profile = () => (
     <div>
       <Popover content={publishMenu} trigger="click">
-	{path === '/editor'? <a onClick={publish}><Icon type="smile" /></a>: ''}
+	{path === '/editor'? <Icon type="more" />: ''}
       </Popover>
       <Popover content={userMenu} trigger="click">
 	<a>{stat.user.username}</a>
