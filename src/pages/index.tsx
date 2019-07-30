@@ -18,16 +18,12 @@ class Articles extends React.Component {
     this.props = props;
   }
 
-  gen() {
-    articleAPI[`get_${this.props.type}_thums`]().then(r => {
+  componentWillMount() {
+    articleAPI.get_article_thums().then(r => {
       if (r.data.errMsg === 'ok') {
 	this.setState({ articles: r.data.data });
       }
-    })
-  }
-
-  componentWillMount() {
-    this.gen()
+    });
   }
 
   render() {
@@ -42,8 +38,8 @@ class Articles extends React.Component {
       return (
 	<div>
 	  {this.state.articles.map(r => (
-	    <ArticleThum key={r._id} title={r.title} id={r._id} type={this.props.type} that={this}/>)
-	  )}
+	    <ArticleThum key={r._id} title={r.title} id={r._id} />
+	  ))}
 	</div>
       )
     }
@@ -71,27 +67,16 @@ const Index = props => {
 	  {stat.login === false?'':<Button className={ss.push_article} size='large' onClick={editor}>写文章</Button>}
 	</Col>
       </Row>
+      <Divider />
       <Row>
-	<Tabs defaultActiveKey="1" onChange={callback} tabBarGutter={0} animated={false}>
-	  <TabPane className={ss.tp} tab="草稿" key="1">
-	    {stat.login?
-	      <Articles type='draft' />:
-	      (<div>
-		<div className={ss.empty}>暂无草稿</div>
-		<Divider />
-	      </div>)
-	    }
-	  </TabPane>
-	  <TabPane className={ss.tp} tab="已发布" key="2">
-	    {stat.login?
-	      <Articles type='article' />:
-	      (<div>
-		<div className={ss.empty}>暂无草稿</div>
-		<Divider />
-	      </div>)
-	    }
-	  </TabPane>
-	</Tabs>
+	{stat.login?
+	  <Articles type='article' />:
+	  (<div>
+	    <div className={ss.empty}>暂无草稿</div>
+	    <Divider />
+	  </div>
+	  )
+	}
       </Row>
     </section>
   );

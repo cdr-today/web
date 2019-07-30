@@ -1,18 +1,20 @@
+import api from '@/api/article';
+
 export default {
   state: {
     title: '',
-    content: ''
+    content: '',
   },
   reducers: {
-    'title'(state, { payload: str }) {
+    title(state, { payload: str }) {
       state.title = str;
       return state;
     },
-    'content'(state, { payload: str }) {
+    content(state, { payload: str }) {
       state.content = str;
       return state;
     },
-    'clear'(state, { payload: str }) {
+    clear(state, { payload: str }) {
       state.title = '';
       state.content = '';
       return state;

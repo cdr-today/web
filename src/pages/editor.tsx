@@ -5,7 +5,6 @@ import { Typography, Divider } from 'antd';
 import router from 'umi/router';
 
 import api from '@/api/article';
-
 const { Title } = Typography;
 
 class Editor extends React.Component {
@@ -16,18 +15,19 @@ class Editor extends React.Component {
 
   componentWillMount() {
     let query = this.props.history.location.query;
-    if (query.type) {
-      api[`get_${query.type}`](query).then(r => {
-	if (r.data.errMsg === 'ok' && r.data.data.length === 1) {
-	  this.props.dispatch({ type: 'editor/title', payload: r.data.data[0].title });
-	  this.props.dispatch({ type: 'editor/content', payload: r.data.data[0].content });
+    if (query.id) {
+      api.get_article(query).then(r => {
+	if (r.data.errMsg === 'ok') {
+	  this.props.dispatch({ type: 'editor/title', payload: r.data.data.title });
+	  this.props.dispatch({ type: 'editor/content', payload: r.data.data.content });
 	} else {
+	  message.error('网络错误');
 	  router.push('/');
 	}
       })
     }
   }
-  
+
   tc = async (e) => {
     await this.props.dispatch({ type: 'editor/title', payload: e.target.value });
   }

@@ -7,11 +7,11 @@ import ss from '@/styles/article_thum.less';
 
 const { Title } = Typography;
 const article = node => {
-  router.push(`/article?id=${node.id}&type=${node.type}`);
+  router.push(`/article?id=${node.id}`);
 }
 
 const editor = props => {
-  router.push(`/editor?id=${props.id}&type=${props.type}`);
+  router.push(`/editor?id=${props.id}`);
 }
 
 const del = props => {
@@ -21,10 +21,9 @@ const del = props => {
     okText: '确认',
     cancelText: '取消',
     onOk: () => {
-      api[`delete_${props.type}`]({id: props.id}).then(r => {
+      api.delete_article({id: props.id}).then(r => {
 	if (r.data.errMsg === 'ok') {
 	  message.success('删除成功');
-	  props.that.gen();
 	} else {
 	  message.error('删除失败');
 	}
@@ -42,15 +41,15 @@ const Content = props => (
 );
 
 const ArticleThum = props => (
-    <div>
-      <Title level={3} onClick={() => article(props)} className={ss.title}>{props.title}</Title>
-      <div>id: {props.id}</div>
-      <Divider orientation="right">
-	<Popover placement='bottom' trigger="click" content={<Content props={props} />}>
-	  <Icon type="down" />
-	</Popover>
-      </Divider>
-    </div>
+  <div>
+    <Title level={3} onClick={() => article(props)} className={ss.title}>{props.title}</Title>
+    <div>id: {props.id}</div>
+    <Divider orientation="right">
+      <Popover placement='bottom' trigger="click" content={<Content props={props} />}>
+	<Icon type="down" />
+      </Popover>
+    </Divider>
+  </div>
 );
 
 export default ArticleThum;
