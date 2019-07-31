@@ -39,7 +39,7 @@ const del = props => {
 
 const _Content = props => (
   <div>
-    <a className={ss.item} onClick={() => editor(props)}>编辑</a>
+    <a className={ss.item} onClick={() => editor(props.props)}>编辑</a>
     <br />
     <a className={ss.item} onClick={() => del(props)}>删除</a>
   </div>

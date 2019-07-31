@@ -37,7 +37,7 @@ export default class Article extends React.Component {
       <div className={ss.page}>
 	<Title level={2}>{this.state.title}</Title>
 	<Divider />
-	<content className={ss.content}>{this.state.content}</content>
+	<div className={ss.content}>{this.state.content}</div>
       </div>
     );
   }
