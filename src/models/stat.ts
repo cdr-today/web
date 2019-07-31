@@ -7,10 +7,11 @@ export default {
     user: {
       username: 'Anonymous',
       token: '',
-    }
+    },
+    thums: []
   },
   reducers: {
-    'login'(state, { payload: bool }) {
+    login(state, { payload: bool }) {
       state.login = bool;
 
       // set user data;
@@ -22,8 +23,12 @@ export default {
       
       return state;
     },
-    'user'(state, { payload: obj }) {
+    user(state, { payload: obj }) {
       state.user = obj;
+      return state;
+    },
+    thums(state, { payload: arr }) {
+      state.thums = arr;
       return state;
     }
   }

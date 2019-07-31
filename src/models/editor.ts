@@ -18,6 +18,6 @@ export default {
       state.title = '';
       state.content = '';
       return state;
-    }
+    },
   }
 }

@@ -14,7 +14,7 @@ class Editor extends React.Component {
   }
 
   componentWillMount() {
-    let query = this.props.history.location.query;
+    let query = this.props.history.location.query;    
     if (query.id) {
       api.get_article(query).then(r => {
 	if (r.data.errMsg === 'ok') {

@@ -1,33 +1,32 @@
 import React from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
-import articleAPI from '@/api/article';
+import api from '@/api/article';
 import { Row, Col, Button, Tabs, Divider, Empty } from 'antd';
 import ArticleThum from '@/components/article_thum';
 import ss from '@/styles/index.less';
 
 const { TabPane } = Tabs;
 
-class Articles extends React.Component {
-  state = {
-    articles: []
-  }
-
+class _Articles extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
   }
-
+  
   componentWillMount() {
-    articleAPI.get_article_thums().then(r => {
+    const { dispatch } = this.props;
+    api.get_article_thums().then(r => {
       if (r.data.errMsg === 'ok') {
-	this.setState({ articles: r.data.data });
+	dispatch({ type: 'stat/thums', payload: r.data.data })
       }
     });
   }
 
   render() {
-    if (this.state.articles.length === 0) {
+    const { stat, dispatch } = this.props;
+    
+    if (stat.thums.length === 0) {
       return (
 	<div>
 	  <div className={ss.empty}>暂无草稿</div>
@@ -37,7 +36,7 @@ class Articles extends React.Component {
     } else {
       return (
 	<div>
-	  {this.state.articles.map(r => (
+	  {stat.thums.map(r => (
 	    <ArticleThum key={r._id} title={r.title} id={r._id} />
 	  ))}
 	</div>
@@ -45,6 +44,10 @@ class Articles extends React.Component {
     }
   }
 };
+
+const Articles = connect(({ stat }) => ({
+  stat
+}))(_Articles);
 
 const Index = props => {
   const { dispatch, stat } = props;
