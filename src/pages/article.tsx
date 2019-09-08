@@ -9,7 +9,8 @@ import ss from '@/styles/article.less';
 export default class Article extends React.Component {
   state = {
     title: '',
-    content: ''
+    content: '',
+    cover: ''
   }
 
   constructor(props) {
@@ -19,17 +20,13 @@ export default class Article extends React.Component {
 
   componentWillMount() {
     let query = this.props.history.location.query;
-    api.get_article(query).then(r => {
-      if (r.data.errMsg === 'ok') {
-	this.setState({
-	  title: r.data.data.title,
-	  content: r.data.data.content
-	})
-      } else {
-	message.error('网络错误');
-	router.push('/404');
-      }
-    });
+    api.get_spec(query.id).then(r => {
+      this.setState({
+	title: r.data.title,
+	content: r.data.content,
+	cover: r.data.cover
+      })
+    })
   }
 
   render() {
@@ -37,6 +34,13 @@ export default class Article extends React.Component {
       <div className={ss.page}>
 	<Title level={2}>{this.state.title}</Title>
 	<Divider />
+	{
+	  this.state.cover == ''?'':
+	    <img
+	      className={ss.image}
+	      src={'http://pxddtegnl.bkt.clouddn.com/' + this.state.cover}
+	    />
+	}
 	<div className={ss.content}>{this.state.content}</div>
       </div>
     );

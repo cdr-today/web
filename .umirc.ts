@@ -19,7 +19,6 @@ const config: IConfig =  {
 	immer: true
       },
       dynamicImport: { webpackChunkName: true },
-      title: 'Lark-in',
       dll: false,      
       routes: {
         exclude: [

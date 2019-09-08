@@ -1,148 +1,30 @@
 import React from 'react';
-import { connect } from 'dva';
 import ss from '@/styles/layout.less';
-import { message, Row, Col, Menu, Layout, Popover, Divider, Icon, Modal } from 'antd';
-
-import store from 'store';
+import { Row, Col, Layout } from 'antd';
 import router from 'umi/router';
-import Login from '@/components/login';
-import Register from '@/components/register';
-
 import article from '@/api/article';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const BasicLayout = props => {
-  const { dispatch, modal, stat, editor } = props;
-  const path = props.location.pathname;
-  const query = props.history.location.query;
-  
-  // auth
-  stat.login === false && path !== '/'? router.push('/'): '';
-
-  let store_data = store.get('store_data');
-  if ( store_data && store_data.token !== undefined ) {
-    dispatch({ type: 'stat/login', payload: true });
-  }
-
-  // Modals
-  const login = async () => await dispatch({ type: 'modal/login', payload: true });
-  const register = async () => await dispatch({ type: 'modal/register', payload: true });
-
-  // Popover
-  const logout = async () => {
-    await dispatch({ type: 'stat/login', payload: false });
-    await store.clearAll();
-  }
-
-  // publish
-  const publish = async () => {
-    if (editor.title === '') {
-      message.warning('请填写标题');
-      return;
-    } else if (editor.content === '') {
-      message.warning('请填写文章内容');
-      return;
-    }
-
-    if (query.id) {
-      Modal.confirm({
-	icon: null,
-	title: '更新文章?',
-	okText: '确认',
-	cancelText: '取消',
-	onOk: async () => {
-	  let r = await article.update_article({
-	    id: query.id, ...editor
-	  });
-	  if (r.data.errMsg && r.data.errMsg === 'ok') {
-	    await message.success('文章已更新', .5);
-	    router.push('/');
-	    await dispatch({ type: 'editor/clear', payload: null });
-	  } else {
-	    await message.error('文章发布失败', .5);
-	  }
-	}
-      });
-    } else {
-      Modal.confirm({
-	icon: null,
-	title: '发布文章?',
-	okText: '确认',
-	cancelText: '取消',
-	onOk: async () => {
-	  let r = await article.article({ ...editor });
-	  if (r.data.errMsg && r.data.errMsg === 'ok') {
-	    await message.success('文章已发布', .5);
-	    router.push('/');
-	    await dispatch({ type: 'editor/clear', payload: null });
-	  } else {
-	    await message.error('文章发布失败', .5);
-	  }
-	}
-      });
-    }
-  }
-
+export default (props) => {
   // router
   const home = () => router.push('/');
-  const toEditor = () => router.push('/editor');
 
-  const userMenu = (
-    <div className={ss.um}>
-      <a onClick={toEditor}>写文章</a>
-      <br />
-      <a onClick={home}>文章列表</a>
-      <hr />
-      <a onClick={logout}>退出登录</a>
-    </div>
-  );
-
-  const publishMenu = (
-    <div className={ss.pm}>
-      <a onClick={publish}>{query.id? '更新文章': '发布文章'}</a>
-    </div>
-  );
+  // init
+  const host = window.location.host;
+  let parts = host.split('.');
+  let author = parts[0];
   
-  const Profile = () => (
-    <div>
-      <Popover content={publishMenu} trigger="click">
-	{path === '/editor'? <Icon type="more" />: ''}
-      </Popover>
-      <Popover content={userMenu} trigger="click">
-	<a>{stat.user.username}</a>
-      </Popover>
-    </div>
-  );
-  
-  const Tools = () => (
-    <div>
-      <a onClick={login}>登录</a>
-      <a onClick={register}>注册</a>
-    </div>
-  );
-
   return (
     <Layout className={ss.normal}>
       <Header className={ss.header}>
 	<Row className={ss.header_row}>
 	  <Col className={ss.header_title} span={12}>
-	    <div className={ss.header_title_text} onClick={home}>Lark-in</div>
-	  </Col>
-	  <Col className={ss.header_right} span={12}>
-	    {stat.login? <Profile />: <Tools />}
+	    <div className={ss.header_title_text} onClick={home}>{author}</div>
 	  </Col>
 	</Row>
-	<section>
-	  <Login />
-	  <Register />
-	</section>
       </Header>
       <Content className={ss.content}>{props.children}</Content>
     </Layout>
   );
 };
-
-export default connect(({ modal, stat, editor }) => ({
-  modal, stat, editor
-}))(BasicLayout);

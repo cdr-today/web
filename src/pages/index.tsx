@@ -2,44 +2,48 @@ import React from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
 import api from '@/api/article';
-import { Row, Col, Button, Tabs, Divider, Empty } from 'antd';
-import ArticleThum from '@/components/article_thum';
+import { Row, Divider, Empty } from 'antd';
 import ss from '@/styles/index.less';
-
-const { TabPane } = Tabs;
+import ArticleThum from '@/components/article_thum';
 
 class _Articles extends React.Component {
+  state = {
+    articles: []
+  }
   constructor(props) {
     super(props);
     this.props = props;
   }
   
   componentWillMount() {
-    const { dispatch } = this.props;
-    api.get_article_thums().then(r => {
-      if (r.data.errMsg === 'ok') {
-	dispatch({ type: 'stat/thums', payload: r.data.data })
-      }
-    });
+    const host = window.location.host;
+    let parts = host.split('.');
+    let author = parts[0];
+    document.title = author;
+    
+    api.get_articles(author).then(r => {
+      this.setState({
+	articles: r.articles
+      })
+    })
   }
 
   render() {
-    const { stat, dispatch } = this.props;
-    
-    if (stat.thums.length === 0) {
+    console.log(this.state.articles)
+    if (this.state.articles === 0) {
       return (
 	<div>
-	  <div className={ss.empty}>暂无草稿</div>
+	  <div className={ss.empty}>暂无文章</div>
 	  <Divider />
 	</div>
       )
     } else {
       return (
-	<div>
-	  {stat.thums.map(r => (
-	    <ArticleThum key={r._id} title={r.title} id={r._id} />
-	  ))}
-	</div>
+     	<div>
+     	{this.state.articles.map(r => (
+     	  <ArticleThum key={r.id} title={r.title} id={r.id} />
+     	))}
+     	</div>
       )
     }
   }
@@ -50,36 +54,14 @@ const Articles = connect(({ stat }) => ({
 }))(_Articles);
 
 const Index = props => {
-  const { dispatch, stat } = props;
-
-  const callback = (key) => {
-    console.log(key);
-  }
-
-  const editor = () => {
-    router.push('/editor');
-  }
+  const host = window.location.host;
+  let parts = host.split('.');
+  let author = parts[0];
   
   return (
     <section className={ss.page}>
-      <Row className={ss.top_row} type='flex'>
-	<Col span={12}>
-	  <p className={ss.title}>我的文章</p>
-	</Col>
-	<Col className={ss.tools} span={12}>
-	  {stat.login === false?'':<Button className={ss.push_article} size='large' onClick={editor}>写文章</Button>}
-	</Col>
-      </Row>
-      <Divider />
       <Row>
-	{stat.login?
-	  <Articles type='article' />:
-	  (<div>
-	    <div className={ss.empty}>暂无草稿</div>
-	    <Divider />
-	  </div>
-	  )
-	}
+	<Articles type='article' />
       </Row>
     </section>
   );

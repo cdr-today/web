@@ -16,6 +16,7 @@
     "medium-editor": "^5.23.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "request": "^2.88.0",
     "store": "^2.0.12"
   },
   "devDependencies": {
