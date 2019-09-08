@@ -1,4 +1,4 @@
-paimport axios from 'axios';
+import axios from 'axios';
 import cfg from './config';
 
 const rGet = async (url) => {

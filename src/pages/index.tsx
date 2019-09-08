@@ -29,12 +29,10 @@ class _Articles extends React.Component {
   }
 
   render() {
-    console.log(this.state.articles)
-    if (this.state.articles === 0) {
+    if (this.state.articles.length === 0) {
       return (
 	<div>
 	  <div className={ss.empty}>暂无文章</div>
-	  <Divider />
 	</div>
       )
     } else {
