@@ -1,10 +1,9 @@
 import React from 'react';
-import router from 'umi/router';
 import { display } from '@/x/time';
 import api from '@/api/article';
 import ss from '@/styles/index.less';
 import ArticleThum from '@/components/article_thum';
-import { Row, Divider, Empty } from 'antd';
+import { Row } from 'antd';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 
 class Articles extends React.Component {
@@ -55,7 +54,7 @@ class Articles extends React.Component {
 
     let author = document.title;
     api.get_articles(author, this.state.page).then(r => {
-      if (r.posts.length == 0) {
+      if (r.posts.length === 0) {
 	this.setState({ reachedMax: true });
 	return;
       }

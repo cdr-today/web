@@ -1,21 +1,19 @@
 export function notus(doc) {
-  if(doc == null) {
+  if(doc === null) {
     return '';
   }
 
   doc = JSON.parse(doc)
   let html = doc.map((e, i) => {
     if(e.insert.match(/^\n$/)) {
-
       if(
 	e.attributes &&
 	  e.attributes.block && (
-	    e.attributes.block == 'ul' ||
-	      e.attributes.block == 'ol'
+	    e.attributes.block === 'ul' ||
+	      e.attributes.block === 'ol'
 	  )
       ) {
-	
-	return;
+	return '';
       }
       return '<br/>';
     }
@@ -60,11 +58,11 @@ function _render(text, attrs) {
   }
   
   if(attrs.embed) {
-    if (attrs.embed.type == 'image') {
+    if (attrs.embed.type === 'image') {
       return `<img src=${url + attrs.embed.source} /><br/><br/>`
     }
 
-    if (attrs.embed.type == 'hr') {
+    if (attrs.embed.type === 'hr') {
       return '<hr/>';
     }
     

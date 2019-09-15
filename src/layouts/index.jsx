@@ -2,9 +2,8 @@ import React from 'react';
 import ss from '@/styles/layout.less';
 import { Row, Col, Layout } from 'antd';
 import router from 'umi/router';
-import article from '@/api/article';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 export default (props) => {
   // router

@@ -1,8 +1,6 @@
 import React from 'react';
-import { Divider, Typography, Icon, Popover, Modal, message } from 'antd';
+import { Divider, Typography } from 'antd';
 import router from 'umi/router';
-import { connect } from 'dva';
-import api from '@/api/article';
 import ss from '@/styles/article_thum.less';
 
 const { Title } = Typography;

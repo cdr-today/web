@@ -1,4 +1,3 @@
-import axios from 'axios';
 import cfg from './config';
 
 const rGet = async (url) => {
@@ -8,7 +7,9 @@ const rGet = async (url) => {
 
 class Article {
   static get_articles(author, page) {
-    page == null? page = 0 : '';
+    if (page == null) {
+      page = 0;
+    }
     
     return rGet(`/x/${author}/p?p=${page}`);
   }

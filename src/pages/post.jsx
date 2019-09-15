@@ -1,12 +1,11 @@
 import React from 'react';
-import router from 'umi/router';
 import { notus } from '@/x/notus';
 import api from '@/api/article';
-
-import { Typography, Divider, message } from 'antd';
+import ss from '@/styles/article.less';
+import { Typography } from 'antd';
 const { Title } = Typography;
 
-import ss from '@/styles/article.less';
+
 
 export default class Article extends React.Component {
   state = {
