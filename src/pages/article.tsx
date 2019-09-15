@@ -1,16 +1,16 @@
 import React from 'react';
-import api from '@/api/article';
-import { Typography, Divider, message } from 'antd';
 import router from 'umi/router';
+import { notus } from '@/x/notus';
+import api from '@/api/article';
+
+import { Typography, Divider, message } from 'antd';
 const { Title } = Typography;
 
 import ss from '@/styles/article.less';
 
 export default class Article extends React.Component {
   state = {
-    title: '',
-    content: '',
-    cover: ''
+    doc: ''
   }
 
   constructor(props) {
@@ -21,11 +21,7 @@ export default class Article extends React.Component {
   componentWillMount() {
     let query = this.props.history.location.query;
     api.get_spec(query.id).then(r => {
-      this.setState({
-	title: r.data.title,
-	content: r.data.content,
-	cover: r.data.cover
-      })
+      this.setState({ doc: notus(r.data.document)})
     })
   }
 
@@ -33,15 +29,7 @@ export default class Article extends React.Component {
     return(
       <div className={ss.page}>
 	<Title level={2}>{this.state.title}</Title>
-	<Divider />
-	{
-	  this.state.cover == ''?'':
-	    <img
-	      className={ss.image}
-	      src={'http://pxddtegnl.bkt.clouddn.com/' + this.state.cover}
-	    />
-	}
-	<div className={ss.content}>{this.state.content}</div>
+	<div className='markdown-body' dangerouslySetInnerHTML={{ __html: this.state.doc }} />
       </div>
     );
   }

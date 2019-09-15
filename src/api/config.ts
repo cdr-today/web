@@ -1,3 +1,3 @@
 export default {
-  base: 'http://127.0.0.1:6060/api/v0'
+  base: 'https://api.cdr.today/api/v0'
 }

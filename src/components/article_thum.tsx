@@ -13,7 +13,7 @@ const article = node => {
 const ArticleThum = props => (
   <div>
     <Title level={3} onClick={() => article(props)} className={ss.title}>{props.title}</Title>
-    <div>{props.id}</div>
+    <div>{props.date}</div>
     <Divider />
   </div>
 );
