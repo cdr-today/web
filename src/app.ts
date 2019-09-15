@@ -3,12 +3,10 @@ import 'antd/dist/antd.less';
 function check() {
   const host = window.location.host;
   const path = window.location.pathname;
-
-  if (path == '/') {
-    window.location.replace("https://intro.cdr.today");
-  }
-
-  let author = path.slice(1);
+  let parts = path.split('/');
+  
+  let author;
+  parts[1]?author = parts[1] : author = 'cdr.today';
   document.title = author;
 }
 
