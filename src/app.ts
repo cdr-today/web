@@ -6,7 +6,7 @@ function check() {
   let parts = path.split('/');
   
   let author;
-  parts[1]?author = parts[1] : author = 'cdr.today';
+  parts[2]?author = parts[2] : author = 'cdr.today';
   document.title = author;
 }
 
