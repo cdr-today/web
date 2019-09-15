@@ -11,9 +11,7 @@ export default (props) => {
   const home = () => router.push('/');
 
   // init
-  const host = window.location.host;
-  let parts = host.split('.');
-  let author = parts[0];
+  let author = document.title;
   
   return (
     <Layout className={ss.normal}>
