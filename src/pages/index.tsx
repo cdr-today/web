@@ -1,14 +1,13 @@
 import React from 'react';
 import router from 'umi/router';
-import { connect } from 'dva';
+import { display } from '@/x/time';
 import api from '@/api/article';
-import { Row, Divider, Empty } from 'antd';
 import ss from '@/styles/index.less';
 import ArticleThum from '@/components/article_thum';
-import { display } from '@/x/time';
+import { Row, Divider, Empty } from 'antd';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 
-class _Articles extends React.Component {
+class Articles extends React.Component {
   state = {
     posts: [],
     ticking: false,
@@ -100,10 +99,6 @@ class _Articles extends React.Component {
   }
 };
 
-const Articles = connect(({ stat }) => ({
-  stat
-}))(_Articles);
-
 const Index = props => {
   const host = window.location.host;
   let parts = host.split('.');
@@ -118,6 +113,4 @@ const Index = props => {
   );
 }
 
-export default connect(({ modal, login, stat }) => ({
-  modal, login, stat
-}))(Index);
+export default Index;

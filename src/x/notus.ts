@@ -6,6 +6,17 @@ export function notus(doc) {
   doc = JSON.parse(doc)
   let html = doc.map((e, i) => {
     if(e.insert.match(/^\n$/)) {
+
+      if(
+	e.attributes &&
+	  e.attributes.block && (
+	    e.attributes.block == 'ul' ||
+	      e.attributes.block == 'ol'
+	  )
+      ) {
+	
+	return;
+      }
       return '<br/>';
     }
     
@@ -49,13 +60,17 @@ function _render(text, attrs) {
   }
   
   if(attrs.embed) {
-    console.log(attrs);
     if (attrs.embed.type == 'image') {
       return `<img src=${url + attrs.embed.source} /><br/><br/>`
     }
+
+    if (attrs.embed.type == 'hr') {
+      return '<hr/>';
+    }
     
-    return '<hr/>';
+    return '';
   }
-  
+
+
   return text;
 }
