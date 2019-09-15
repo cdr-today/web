@@ -3,9 +3,8 @@ import 'antd/dist/antd.less';
 function check() {
   const host = window.location.host;
   const path = window.location.pathname;
-  const parts = host.split('.');
 
-  if (host == 'https://cdr.today' || parts.length > 3) {
+  if (path == '/') {
     window.location.replace("https://intro.cdr.today");
   }
 
